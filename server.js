@@ -54,8 +54,10 @@ app.post('/update',function(req,res){
     //respond with data
 });
 
+
 app.post('/select_game',function(req,res){
-    pool.query(`SELECT "fname","fmob","game", "place" FROM "find_game" 
+    var sample= new Array(10);
+    pool.query(`SELECT "fname","fmob","game", "place", "flat", "flong", "ylat", "ylong" FROM "find_game" 
         WHERE "yname" = $1;`
         ,[req.body.name],function(err,result){
             if(err){
@@ -64,11 +66,17 @@ app.post('/select_game',function(req,res){
             else{
                 if(result.length.rows===0)
                     res.send({error:"No rows"});
-                else
-                    res.send(result.rows[0]);
+                else{
+                    for(var i=0; i< result.rows.length; i++)
+                        if(getDistanceFromLatiLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=0.200)
+                            sample.push(result.rows[0]);
+                        
+                    res.send(sample);
+                }
             }
     });
 });
+
 
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
