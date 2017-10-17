@@ -15,6 +15,8 @@ var config={
    database:'hariharanm2016',
    host:'db.imad.hasura-app.io',
    port:'5432',
+   idleTimeoutMillis: 1000, 
+   ssl : true,
    password:process.env.DB_PASSWORD
 };
 var pool=new Pool(config);
