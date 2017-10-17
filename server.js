@@ -54,9 +54,9 @@ app.post('/update',function(req,res){
     //respond with data
 });
 
-app.get('/select_game',function(req,res){
+app.post('/select_game',function(req,res){
     pool.query(`SELECT "fname","fmob","game", "place" FROM "find_game" 
-        WHERE "yname" = '$1';`
+        WHERE "yname" = $1;`
         ,[req.body.name],function(err,result){
             if(err){
                 res.status(500).send({error: err.toString()});
@@ -69,6 +69,9 @@ app.get('/select_game',function(req,res){
             }
     });
 });
+
+
+
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
