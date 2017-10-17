@@ -21,26 +21,54 @@ var pool=new Pool(config);
 
 app.post('/insert',function(req,res){
     //make a request
-    var name=req.body.name;
-    var mob= req.body.mob;
-    var game= req.body.game;
-    var place= req.body.place;
-    var lat= req.body.lat;
-    var long= req.body.long;
-    
     pool.query(`INSERT INTO "user" ("name", "mob", "game", "place", "lat", "long")
-VALUES ($1, $2, NULL, NULL, '12.3', '16.5');`,[req.body.name, req.body.mob, req.body.game, req.body.place, req.body.lat, req.body.long`],function(err,result){
+VALUES ($1, $2, NULL, NULL, $3, $4);`,[req.body.name, req.body.mob, req.body.lat, req.body.long],function(err,result){
         if(err){
-            res.status(500).send(err.toString());
+            res.status(500).send({error: err.toString()});
         }
         else
         {
-            res.send('Success');
+            res.send({message: "Success"});
         }
     });
     //respond with data
 });
 
+
+app.post('/update',function(req,res){
+    //make a request
+    pool.query(`UPDATE "user" SET
+        "game" = $1,
+        "place" = $2,
+        "lat" = $3,
+        "long" = $4'
+        WHERE "name" = 'cool';`
+        ,[req.body.game, req.body.place, req.body.lat, req.body.long],function(err,result){
+            if(err){
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                res.send({message: "Success"});
+            }
+    });
+    //respond with data
+});
+
+app.get('/select_game',function(req,res){
+    pool.query(`SELECT "fname","fmob","game", "place" FROM "find_game" 
+        WHERE "yname" = '$1';`
+        ,[req.body.name],function(err,result){
+            if(err){
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                if(result.length.rows===0)
+                    res.send({error:"No rows"});
+                else
+                    res.send(result.rows[0]);
+            }
+    });
+});
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
