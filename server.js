@@ -42,8 +42,8 @@ app.post('/update',function(req,res){
         "place" = $2,
         "lat" = $3,
         "long" = $4'
-        WHERE "name" = 'cool';`
-        ,[req.body.game, req.body.place, req.body.lat, req.body.long],function(err,result){
+        WHERE "name" = $5;`
+        ,[req.body.game, req.body.place, req.body.lat, req.body.long, req.body.name],function(err,result){
             if(err){
                 res.status(500).send({error: err.toString()});
             }
