@@ -19,11 +19,17 @@ var config={
 };
 var pool=new Pool(config);
 
-app.get('/test-db',function(req,res){
+app.post('/insert',function(req,res){
     //make a request
-    var name='hari3';
+    var name=req.body.name;
+    var mob= req.body.mob;
+    var game= req.body.game;
+    var place= req.body.place;
+    var lat= req.body.lat;
+    var long= req.body.long;
+    
     pool.query(`INSERT INTO "user" ("name", "mob", "game", "place", "lat", "long")
-VALUES ($1, '', NULL, NULL, '12.3', '16.5');`,[name],function(err,result){
+VALUES ($1, $2, NULL, NULL, '12.3', '16.5');`,[req.body.name, req.body.mob, req.body.game, req.body.place, req.body.lat, req.body.long`],function(err,result){
         if(err){
             res.status(500).send(err.toString());
         }
