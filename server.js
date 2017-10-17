@@ -37,15 +37,31 @@ VALUES ($1, $2, NULL, NULL, $3, $4);`,[req.body.name, req.body.mob, req.body.lat
 });
 
 
-app.post('/update',function(req,res){
+app.post('/update_lat_long',function(req,res){
+    //make a request
+    pool.query(`UPDATE "user" SET
+        "lat" = $1,
+        "long" = $2'
+        WHERE "name" = $3;`
+        ,[req.body.lat, req.body.long, req.body.name],function(err,result){
+            if(err){
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                res.send({message: "Success"});
+            }
+    });
+    //respond with data
+});
+
+
+app.post('/update_game_place',function(req,res){
     //make a request
     pool.query(`UPDATE "user" SET
         "game" = $1,
         "place" = $2,
-        "lat" = $3,
-        "long" = $4'
-        WHERE "name" = $5;`
-        ,[req.body.game, req.body.place, req.body.lat, req.body.long, req.body.name],function(err,result){
+        WHERE "name" = $3;`
+        ,[req.body.game, req.body.place, req.body.name],function(err,result){
             if(err){
                 res.status(500).send({error: err.toString()});
             }
