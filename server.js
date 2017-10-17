@@ -59,7 +59,7 @@ app.post('/update_game_place',function(req,res){
     //make a request
     pool.query(`UPDATE "user" SET
         "game" = $1,
-        "place" = $2,
+        "place" = $2
         WHERE "name" = $3;`
         ,[req.body.game, req.body.place, req.body.name],function(err,result){
             if(err){
