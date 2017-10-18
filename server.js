@@ -41,7 +41,7 @@ app.post('/update_lat_long',function(req,res){
     //make a request
     pool.query(`UPDATE "user" SET
         "lat" = $1,
-        "long" = $2,
+        "long" = $2
         WHERE "name" = $3;`
         ,[req.body.lat, req.body.long, req.body.name],function(err,result){
             if(err){
