@@ -106,7 +106,7 @@ app.post('/select_game',function(req,res){
                     res.send({error:"No rows"});
                 else{
                     for(var i=0; i< result.rows.length; i++)
-                        if(getDistanceFromLatiLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=0.200)
+                        if(getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=0.200)
                             sample.push(result.rows[i]);
                         
                     res.send(sample);
