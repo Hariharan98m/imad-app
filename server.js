@@ -103,7 +103,7 @@ app.post('/select_game',function(req,res){
             }
             else{
                 if(result.rows.length===0)
-                    res.send({error:"No rows"});
+                    res.status(500).send({error:"No rows"});
                 else{
                     for(var i=0; i< result.rows.length; i++){
                         console.log('\n'+JSON.stringify(result.rows[i])+'\n');
@@ -115,7 +115,7 @@ app.post('/select_game',function(req,res){
                     
                     }
                     if(sample.length===0)
-                        res.send({error:"No rows"});
+                        res.status(500).send({error:"No rows"});
                     else
                         res.send(sample);
                 }
@@ -133,7 +133,7 @@ app.post('/select_game_starter',function(req,res){
             }
             else{
                 if(result.rows.length===0)
-                    res.send({error:"No rows"});
+                    res.status(500).send({error:"No rows"});
                 else{
                     for(var i=0; i< result.rows.length; i++){
                         console.log('\n'+JSON.stringify(result.rows[i])+'\n');
@@ -143,7 +143,7 @@ app.post('/select_game_starter',function(req,res){
                         }
                     }
                     if(sample.length===0)
-                        res.send({error:"No rows"});
+                        res.status(500).send({error:"No rows"});
                     else
                         res.send(sample[0]);
                 }
