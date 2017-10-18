@@ -107,13 +107,14 @@ app.post('/select_game',function(req,res){
                 else{
                     for(var i=0; i< result.rows.length; i++){
                         console.log('\n'+JSON.stringify(result.rows[i])+'\n');
-                        //if(getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i]//.flong)<=0.200){
+                        if(getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=0.200){
                         console.log('Distance= '+getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong).toString());
                             sample.push(result.rows[i]);
+                        }
                         
-                        
-                    res.send(sample);
+                    
                     }
+                    res.send(sample);
                 }
             }
     });
