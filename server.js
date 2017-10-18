@@ -82,7 +82,7 @@ app.post('/select_game',function(req,res){
                 res.status(500).send({error: err.toString()});
             }
             else{
-                if(result.length.rows===0)
+                if(result.rows.length===0)
                     res.send({error:"No rows"});
                 else{
                     for(var i=0; i< result.rows.length; i++)
