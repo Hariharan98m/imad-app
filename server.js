@@ -114,7 +114,10 @@ app.post('/select_game',function(req,res){
                         
                     
                     }
-                    res.send(sample);
+                    if(sample.length===0)
+                        res.send({error:"No rows"});
+                    else
+                        res.send(sample);
                 }
             }
     });
