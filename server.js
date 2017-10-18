@@ -76,7 +76,7 @@ app.post('/update_game_place',function(req,res){
 app.post('/select_game',function(req,res){
     var sample= new Array(10);
     pool.query(`SELECT "fname","fmob","game", "place", "flat", "flong", "ylat", "ylong" FROM "find_game" 
-        WHERE "fname" = $1;new`
+        WHERE "fname" = $1;`
         ,[req.body.name],function(err,result){
             if(err){
                 res.status(500).send({error: err.toString()});
