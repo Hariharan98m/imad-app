@@ -125,7 +125,7 @@ app.post('/select_game',function(req,res){
 
 app.post('/select_game_starter',function(req,res){
     var sample= [];
-    pool.query(`SELECT "game", "place", "flat", "flong" FROM "find_game" 
+    pool.query(`SELECT "fname", "fmob", "game", "place", "flat", "flong" FROM "find_game" 
         WHERE "yname" = $1;`
         ,[req.body.name],function(err,result){
             if(err){
