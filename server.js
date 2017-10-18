@@ -76,7 +76,7 @@ app.post('/update_game_place',function(req,res){
 app.post('/select_game',function(req,res){
     var sample= new Array(10);
     pool.query(`SELECT "fname","fmob","game", "place", "flat", "flong", "ylat", "ylong" FROM "find_game" 
-        WHERE "yname" = $1;`
+        WHERE "fname" = $1;`
         ,[req.body.name],function(err,result){
             if(err){
                 res.status(500).send({error: err.toString()});
@@ -87,7 +87,7 @@ app.post('/select_game',function(req,res){
                 else{
                     for(var i=0; i< result.rows.length; i++)
                         if(getDistanceFromLatiLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=0.200)
-                            sample.push(result.rows[0]);
+                            sample.push(result.rows[i]);
                         
                     res.send(sample);
                 }
