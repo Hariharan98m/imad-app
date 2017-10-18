@@ -105,11 +105,14 @@ app.post('/select_game',function(req,res){
                 if(result.rows.length===0)
                     res.send({error:"No rows"});
                 else{
-                    for(var i=0; i< result.rows.length; i++)
+                    for(var i=0; i< result.rows.length; i++){
+                        console.log(JSON.stringify(result.rows[i]));
                         if(getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=0.200)
+                        console.log(getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong));
                             sample.push(result.rows[i]);
                         
                     res.send(sample);
+                    }
                 }
             }
     });
