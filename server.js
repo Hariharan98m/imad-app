@@ -123,6 +123,33 @@ app.post('/select_game',function(req,res){
     });
 });
 
+app.post('/select_game_starter',function(req,res){
+    var sample= [];
+    pool.query(`SELECT "game", "place", "flat", "flong" FROM "find_game" 
+        WHERE "yname" = $1;`
+        ,[req.body.name],function(err,result){
+            if(err){
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                if(result.rows.length===0)
+                    res.send({error:"No rows"});
+                else{
+                    for(var i=0; i< result.rows.length; i++){
+                        console.log('\n'+JSON.stringify(result.rows[i])+'\n');
+                        if(getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong)<=200){
+                        console.log('Distance= '+getDistanceFromLatLonInKm(result.rows[i].ylat, result.rows[i].ylong, result.rows[i].flat, result.rows[i].flong).toString());
+                            sample.push(result.rows[i]);
+                        }
+                    }
+                    if(sample.length===0)
+                        res.send({error:"No rows"});
+                    else
+                        res.send(sample[0]);
+                }
+            }
+    });
+});
 
 
 app.get('/', function (req, res) {
