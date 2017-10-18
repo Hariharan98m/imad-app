@@ -94,7 +94,7 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 
 
 app.post('/select_game',function(req,res){
-    var sample= new Array(10);
+    var sample= [];
     pool.query(`SELECT "yname","ymob","game", "place", "flat", "flong", "ylat", "ylong" FROM "find_game" 
         WHERE "fname" = $1;`
         ,[req.body.name],function(err,result){
