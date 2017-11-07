@@ -53,15 +53,15 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
 });
 
 app.post('/prof_pic', function(req, res){
-    
+    //{"args":{"columns":["*"],"table":"profile_image","where":{"user_id":27}},"type":"select"}
     pool.query(`SELECT "profile_image_link" FROM "user_table" WHERE "id" = $1;`
-        ,[req.body.id], function(err,result){
+        ,[req.body.args.where.user_id], function(err,result){
             if(err){
                 console.log(err.toString());
                 res.status(500).send({error: err.toString()});
             }
             else{
-                res.send(result.rows[0]);
+                res.send(result.rows);
                 }
             });
     
