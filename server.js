@@ -105,7 +105,7 @@ app.post('/select_friends',function(req,res){
 
 
 app.post('/select_invites',function(req,res){
-        pool.query(`SELECT * FROM send_invites_friend_data WHERE "your_id" = $1;`
+        pool.query(`SELECT * FROM send_an_invite_friend_data WHERE "your_id" = $1;`
             ,[req.body.args.where.your_id], function(err,result){
                 if(err){
                     console.log(err.toString());
