@@ -57,6 +57,7 @@ app.post('/login',function(req,res){
     pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1;`
         ,[req.body.username], function(err,result){
             if(err){
+                console.log(err.toString());
                 res.status(500).send({error: err.toString()});
             }
             else{
