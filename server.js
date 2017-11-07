@@ -63,15 +63,18 @@ app.post('/login',function(req,res){
             else{
                 if(result.rows.length===0)
                     res.status(500).send({error:"No rows"});
-                else{   
-                        if(result.rows[0].password===req.body.password)
-                            res.status(200).send({"message":"Match Sucess"});
+                else{   console.log(password);
+                        if(result.rows[0].password===req.body.password){
+                            console.log(password);
+                            res.send({"message":"Match Sucess"});
+                        }
                         else
                             res.status(407).send({"message":"Match failed"});
                     }
                 }
             });
 });
+
 
 
 app.post('/update_lat_long',function(req,res){
