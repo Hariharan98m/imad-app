@@ -75,10 +75,8 @@ app.post('/login',function(req,res){
             });
 });
 
-app.post('/select_friends',function(req,res){
-    //{"args":{"columns":["*"],"table":"confirm_invitees_friend_data","where":{"your_id":27}},"type":"select"}
-    //if(req.body.args.table!=="profile_image")
-        pool.query(`SELECT "*" FROM confirm_invitees_friend_data WHERE "your_id" = $1;`
+app.post('/select_confirms',function(req,res){
+        pool.query(`SELECT * FROM confirm_invitees_friend_data WHERE "your_id" = $1;`
             ,[req.body.args.where.your_id], function(err,result){
                 if(err){
                     console.log(err.toString());
@@ -90,6 +88,36 @@ app.post('/select_friends',function(req,res){
                     }
                 });
 });
+
+app.post('/select_friends',function(req,res){
+        pool.query(`SELECT * FROM your_friends_friend_data WHERE "your_id" = $1;`
+            ,[req.body.args.where.your_id], function(err,result){
+                if(err){
+                    console.log(err.toString());
+                    res.status(500).send({error: err.toString()});
+                }
+                else{
+                    console.log(result.rows);
+                    res.send(result.rows);
+                    }
+                });
+});
+
+
+app.post('/select_invites',function(req,res){
+        pool.query(`SELECT * FROM send_invites_friend_data WHERE "your_id" = $1;`
+            ,[req.body.args.where.your_id], function(err,result){
+                if(err){
+                    console.log(err.toString());
+                    res.status(500).send({error: err.toString()});
+                }
+                else{
+                    console.log(result.rows);
+                    res.send(result.rows);
+                    }
+                });
+});
+
 
 
 app.post('/update_profile', function(req, res){
