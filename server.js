@@ -77,17 +77,18 @@ app.post('/login',function(req,res){
 
 app.post('/select_friends',function(req,res){
     //{"args":{"columns":["*"],"table":"confirm_invitees_friend_data","where":{"your_id":27}},"type":"select"}
-    pool.query(`SELECT "*" FROM $1 WHERE "your_id" = $2;`
-        , [req.body.args.table],[req.body.args.where.your_id], function(err,result){
-            if(err){
-                console.log(err.toString());
-                res.status(500).send({error: err.toString()});
-            }
-            else{
-                console.log(result.rows);
-                res.send(result.rows);
+    if(req.body.args.table!=="profile_image")
+        pool.query(`SELECT "*" FROM $1 WHERE "your_id" = $2;`
+            , [req.body.args.table],[req.body.args.where.your_id], function(err,result){
+                if(err){
+                    console.log(err.toString());
+                    res.status(500).send({error: err.toString()});
                 }
-            });
+                else{
+                    console.log(result.rows);
+                    res.send(result.rows);
+                    }
+                });
 });
 
 
