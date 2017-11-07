@@ -36,6 +36,20 @@ VALUES ($1, $2, NULL, NULL, $3, $4);`,[req.body.name, req.body.mob, req.body.lat
     //respond with data
 });
 
+app.post('/signup', function(req, res){
+    //make a request
+    pool.query(`INSERT INTO "user_table" ("username", "password", "mobile")
+VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
 
 app.post('/update_lat_long',function(req,res){
     //make a request
