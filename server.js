@@ -61,7 +61,7 @@ app.post('/prof_pic', function(req, res){
                 res.status(500).send({error: err.toString()});
             }
             else{
-                res.send(result.rows[0].profile_image_link);
+                res.send(result.rows[0]);
                 }
             });
     
