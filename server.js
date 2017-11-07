@@ -52,7 +52,7 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
 });
 
 
-app.post('/signin',function(req,res){
+app.post('/login',function(req,res){
     var sample= [];
     pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1 or "mobile"=$2;`
         ,[req.body.username],[req.body.mobile], function(err,result){
