@@ -76,7 +76,7 @@ app.post('/login',function(req,res){
 });
 
 app.post('/select_friends',function(req,res){
-    console.log(req.body.username);
+    //console.log(req.body.username);
     pool.query(`SELECT "*" FROM $1 WHERE "your_id" = $2;`
         ,[req.body.args.table],[req.body.args.where.your_id], function(err,result){
             if(err){
