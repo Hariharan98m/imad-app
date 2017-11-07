@@ -53,8 +53,8 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
 
 
 app.post('/login',function(req,res){
-    pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1 or "mobile"=$2;`
-        ,[req.body.username],[req.body.mobile], function(err,result){
+    pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1;`
+        ,[req.body.username], function(err,result){
             if(err){
                 res.status(500).send({error: err.toString()});
             }
