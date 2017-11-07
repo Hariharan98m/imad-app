@@ -36,6 +36,7 @@ VALUES ($1, $2, NULL, NULL, $3, $4);`,[req.body.name, req.body.mob, req.body.lat
     //respond with data
 });
 
+
 app.post('/signup', function(req, res){
     //make a request
     pool.query(`INSERT INTO "user_table" ("username", "password", "mobile")
@@ -51,7 +52,20 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
     //respond with data
 });
 
-
+app.post('/prof_pic', function(req, res){
+    
+    pool.query(`SELECT "profile_image_link" FROM "user_table" WHERE "id" = $1;`
+        ,[req.body.id], function(err,result){
+            if(err){
+                console.log(err.toString());
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                res.send(result.rows[0].profile_image_link);
+                }
+            });
+    
+});
 app.post('/login',function(req,res){
     console.log(req.body.username);
     pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1;`
