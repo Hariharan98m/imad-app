@@ -51,6 +51,28 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
     //respond with data
 });
 
+
+app.post('/signin',function(req,res){
+    var sample= [];
+    pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1 or "mobile"=$2;`
+        ,[req.body.username],[req.body.mobile], function(err,result){
+            if(err){
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                if(result.rows.length===0)
+                    res.status(500).send({error:"No rows"});
+                else{   
+                        if(result.rows[0].password===req.body.password)
+                            res.status(200).send({"message":"Match Sucess"});
+                        else
+                            res.status(407).send({"message":"Match failed"});
+                    }
+                }
+            });
+});
+
+
 app.post('/update_lat_long',function(req,res){
     //make a request
     pool.query(`UPDATE "user" SET
