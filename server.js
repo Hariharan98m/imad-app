@@ -76,6 +76,30 @@ app.post('/login',function(req,res){
 });
 
 
+app.post('/update_profile', function(req, res){
+    //make a request
+    pool.query(`UPDATE "user_table" set 
+    "prof_name" = $1,
+    "work" = $2,
+    "city" = $3,
+    "music_style" = $4,
+    "description" = $5,
+    "passion_with_music" = $6,
+    WHERE "id" = $7;
+    
+    ;`,[req.body.args.objects[0].prof_name, req.body.args.objects[0].work, req.body.args.objects[0].city, req.body.args.objects[0].music_style, req.body.args.objects[0].description, req.body.args.objects[0].passion_with_music, req.body.args.objects[0].id],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
+
+
 
 app.post('/update_lat_long',function(req,res){
     //make a request
