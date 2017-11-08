@@ -84,6 +84,22 @@ app.post('/comment_insert', function(req, res){
     //respond with data
 });
 
+
+//{"args":{"objects":[{"user_id":27,"profile_image_link":"https://www.dropbox.com/s/ekup56b1fnl4jbu/FB_IMG_1500895804626.jpg?raw=1"}],"table":"profile_image"},"type":"insert"}
+app.post('/dp_insert', function(req, res){
+    //make a request
+    pool.query(`UPDATE "user_table" set profile_image_link= $1 where user_id= $2;`,[req.body.args.objects[0].profile_image_link, req.body.args.objects[0].user_id],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
+
 //{"args":{"columns":["*"],"table":"comments","where":{"song_id":3}},"type":"select"}
 app.post('/get_comments', function(req, res){
     pool.query(`SELECT * FROM "comments" WHERE "song_id" = $1;`
