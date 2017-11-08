@@ -38,7 +38,7 @@ app.post('/select_invites',function(req,res){
 app.post('/signup', function(req, res){
     //make a request
     pool.query(`INSERT INTO "user_table" ("username", "password", "mobile")
-VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],function(err,result){
+VALUES ($1, $2, $3) returning id;`,[req.body.username, req.body.password, req.body.mobile],function(err,result){
         if(err){
             res.status(500).send({error: err.toString()});
         }
