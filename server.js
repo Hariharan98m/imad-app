@@ -116,6 +116,21 @@ app.post('/insert_confirm_req', function(req, res){
     //respond with data
 });
 
+//{"args":{"objects":[{"confirm":false,"friend_id":0,"request":true,"user_id":27}],"table":"friend"},"type":"insert"}
+app.post('/update_confirm_req', function(req, res){
+    //make a request
+    pool.query(`UPDATE "friend" set "confirm"= true where "friend_id"= $1 and "user_id"=$2;`,[req.args.objects[0].friend_id, req.body.args.objects[0].user_id],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
+
 
 //{"args":{"columns":["*"],"table":"comments","where":{"song_id":3}},"type":"select"}
 app.post('/get_comments', function(req, res){
