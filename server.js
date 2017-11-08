@@ -86,8 +86,8 @@ app.post('/comment_insert', function(req, res){
 
 //{"args":{"columns":["*"],"table":"comments","where":{"song_id":3}},"type":"select"}
 app.post('/get_comments', function(req, res){
-    pool.query(`SELECT * FROM "comments" WHERE "id" = $1;`
-        ,[req.body.args.where.user_id], function(err,result){
+    pool.query(`SELECT * FROM "comments" WHERE "song_id" = $1;`
+        ,[req.body.args.where.song_id], function(err,result){
             if(err){
                 console.log(err.toString());
                 res.status(500).send({error: err.toString()});
