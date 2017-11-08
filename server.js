@@ -100,6 +100,23 @@ app.post('/dp_insert', function(req, res){
     //respond with data
 });
 
+
+//{"args":{"objects":[{"confirm":false,"friend_id":0,"request":true,"user_id":27}],"table":"friend"},"type":"insert"}
+app.post('/insert_confirm_req', function(req, res){
+    //make a request
+    pool.query(`INSERT INTO "friend" ("confirm", "friend_id", "request", "user_id") VALUES ($1, $2, $3, $4);`,[req.body.args.objects[0].confirm, req.body.args.objects[0].friend_id, req.body.args.objects[0].request, req.body.args.objects[0].user_id],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
+
+
 //{"args":{"columns":["*"],"table":"comments","where":{"song_id":3}},"type":"select"}
 app.post('/get_comments', function(req, res){
     pool.query(`SELECT * FROM "comments" WHERE "song_id" = $1;`
