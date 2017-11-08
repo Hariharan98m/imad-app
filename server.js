@@ -69,6 +69,20 @@ app.post('/song_insert', function(req, res){
     //respond with data
 });
 
+//{"args":{"objects":[{"comment_text":"inser comment","song_id":3,"user_id":0,"user_name":"name"}],"table":"comments"},"type":"insert"}
+app.post('/comment_insert', function(req, res){
+    //make a request
+    pool.query(`INSERT INTO "comments" ("user_id", "song_id", "comment") VALUES ($1, $2, $3);`,[req.body.args.objects[0].user_id, req.body.args.objects[0].song_id, req.body.args.objects[0].comment_text],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
 
 
 //{"args":{"columns":["*"],"table":"song_likes_comments_info","where":{"user_id":27}},"type":"select"}
