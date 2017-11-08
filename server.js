@@ -117,7 +117,8 @@ app.post('/insert_confirm_req', function(req, res){
 //{"args":{"objects":[{"confirm":false,"friend_id":0,"request":true,"user_id":27}],"table":"friend"},"type":"insert"}
 app.post('/update_confirm_req', function(req, res){
     //make a request
-    pool.query(`UPDATE "friend" set "confirm"= true where "friend_id"= $1 and "user_id"=$2;`,[req.body.args.objects[0].friend_id, req.body.args.objects[0].user_id],function(err,result){
+    //{"args":{"$set":{"confirm":true,"friend_id":7,"request":true,"user_id":6},"table":"friend","where":{"friend_id":7,"user_id":6}},"type":"update"}
+    pool.query(`UPDATE "friend" set "confirm"= true where "friend_id"= $1 and "user_id"=$2;`,[req.body.args.where.friend_id, req.body.args.where.user_id],function(err,result){
         if(err){
             res.status(500).send({error: err.toString()});
         }
