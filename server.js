@@ -72,7 +72,7 @@ app.post('/song_insert', function(req, res){
 //{"args":{"objects":[{"comment_text":"inser comment","song_id":3,"user_id":0,"user_name":"name"}],"table":"comments"},"type":"insert"}
 app.post('/comment_insert', function(req, res){
     //make a request
-    pool.query(`INSERT INTO "comments" ("user_id", "song_id", "comment", "username") VALUES ($1, $2, $3, $4);`,[req.body.args.objects[0].user_id, req.body.args.objects[0].song_id, req.body.args.objects[0].comment_text, req.body.args.objects[0].username],function(err,result){
+    pool.query(`INSERT INTO "comments" ("user_id", "song_id", "comment", "username") VALUES ($1, $2, $3, $4);`,[req.body.args.objects[0].user_id, req.body.args.objects[0].song_id, req.body.args.objects[0].comment_text, req.body.args.objects[0].user_name],function(err,result){
         if(err){
             res.status(500).send({error: err.toString()});
         }
