@@ -84,6 +84,23 @@ app.post('/comment_insert', function(req, res){
     //respond with data
 });
 
+//{"args":{"columns":["*"],"table":"comments","where":{"song_id":3}},"type":"select"}
+app.post('/get_comments', function(req, res){
+    pool.query(`SELECT * FROM "comments" WHERE "id" = $1;`
+        ,[req.body.args.where.user_id], function(err,result){
+            if(err){
+                console.log(err.toString());
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                res.send(result.rows);
+                }
+            });
+    
+});
+
+
+
 
 //{"args":{"columns":["*"],"table":"song_likes_comments_info","where":{"user_id":27}},"type":"select"}
 app.post('/get_songs', function(req, res){
