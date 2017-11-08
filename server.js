@@ -71,6 +71,25 @@ app.post('/song_insert', function(req, res){
 
 
 
+//{"args":{"columns":["*"],"table":"song_likes_comments_info","where":{"user_id":27}},"type":"select"}
+app.post('/get_songs', function(req, res){
+    //{"args":{"columns":["*"],"table":"profile_image","where":{"user_id":27}},"type":"select"}
+    pool.query(`SELECT * FROM "song_likes_comments_info" WHERE "user_id" = $1;`
+        ,[req.body.args.where.user_id], function(err,result){
+            if(err){
+                console.log(err.toString());
+                res.status(500).send({error: err.toString()});
+            }
+            else{
+                res.send(result.rows);
+                }
+            });
+    
+});
+
+
+
+
 
 app.post('/prof_pic', function(req, res){
     //{"args":{"columns":["*"],"table":"profile_image","where":{"user_id":27}},"type":"select"}
@@ -86,6 +105,7 @@ app.post('/prof_pic', function(req, res){
             });
     
 });
+
 app.post('/login',function(req,res){
     console.log(req.body.username);
     pool.query(`SELECT "password" FROM "user_table" WHERE "username" = $1;`
