@@ -57,7 +57,7 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
 app.post('/song_insert', function(req, res){
     //make a request
     //{"args":{"objects":[{"composer_name":"rahman","song_link":"https://www.dropbox.com/s/wmcd10icwz5qwjk/Enna%20Solla%20Pogirai%20//-%20MassTamilan.com.mp3?raw=1","song_name":"son2","user_id":27}],"table":"song"},"type":"insert"}
-    pool.query(`INSERT INTO "song" ("user_id", "composer_name", "song_name") VALUES ($1, $2, $3);`,[req.body.args.objects[0].user_id, req.body.args.objects[0].composer_name, req.body.args.objects[0].song_name],function(err,result){
+    pool.query(`INSERT INTO "song" ("user_id", "composer_name", "song_name", "song_link") VALUES ($1, $2, $3, $4);`,[req.body.args.objects[0].user_id, req.body.args.objects[0].composer_name, req.body.args.objects[0].song_name, req.body.args.objects[0].song_link],function(err,result){
         if(err){
             res.status(500).send({error: err.toString()});
         }
