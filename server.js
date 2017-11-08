@@ -21,21 +21,19 @@ var config={
 };
 var pool=new Pool(config);
 
-app.post('/insert',function(req,res){
-    //make a request
-    pool.query(`INSERT INTO "user" ("name", "mob", "game", "place", "lat", "long")
-VALUES ($1, $2, NULL, NULL, $3, $4);`,[req.body.name, req.body.mob, req.body.lat, req.body.long],function(err,result){
-        if(err){
-            res.status(500).send({error: err.toString()});
-        }
-        else
-        {
-            res.send({message: "Success"});
-        }
-    });
-    //respond with data
+app.post('/select_invites',function(req,res){
+        pool.query(`SELECT * FROM send_an_invite_friend_data WHERE "your_id" = $1;`
+            ,[req.body.args.where.your_id], function(err,result){
+                if(err){
+                    console.log(err.toString());
+                    res.status(500).send({error: err.toString()});
+                }
+                else{
+                    console.log(result.rows);
+                    res.send(result.rows);
+                    }
+                });
 });
-
 
 app.post('/signup', function(req, res){
     //make a request
@@ -166,10 +164,6 @@ app.post('/get_songs', function(req, res){
     
 });
 
-
-
-
-
 app.post('/prof_pic', function(req, res){
     //{"args":{"columns":["*"],"table":"profile_image","where":{"user_id":27}},"type":"select"}
     pool.query(`SELECT "profile_image_link" FROM "user_table" WHERE "id" = $1;`
@@ -222,6 +216,7 @@ app.post('/select_confirms',function(req,res){
                 });
 });
 
+
 app.post('/select_friends',function(req,res){
         pool.query(`SELECT * FROM your_friends_friend_data WHERE "your_id" = $1;`
             ,[req.body.args.where.your_id], function(err,result){
@@ -237,21 +232,21 @@ app.post('/select_friends',function(req,res){
 });
 
 
-app.post('/select_invites',function(req,res){
-        pool.query(`SELECT * FROM send_an_invite_friend_data WHERE "your_id" = $1;`
-            ,[req.body.args.where.your_id], function(err,result){
-                if(err){
-                    console.log(err.toString());
-                    res.status(500).send({error: err.toString()});
-                }
-                else{
-                    console.log(result.rows);
-                    res.send(result.rows);
-                    }
-                });
+
+app.post('/insert',function(req,res){
+    //make a request
+    pool.query(`INSERT INTO "user" ("name", "mob", "game", "place", "lat", "long")
+VALUES ($1, $2, NULL, NULL, $3, $4);`,[req.body.name, req.body.mob, req.body.lat, req.body.long],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
 });
-
-
 
 app.post('/update_profile', function(req, res){
     //make a request
