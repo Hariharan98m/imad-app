@@ -44,7 +44,7 @@ VALUES ($1, $2, $3) returning id;`,[req.body.username, req.body.password, req.bo
         }
         else
         {
-            res.send({message: "Success"});
+            res.send({id: result.rows[0].id});
         }
     });
     //respond with data
