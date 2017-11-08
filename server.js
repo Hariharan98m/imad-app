@@ -52,6 +52,26 @@ VALUES ($1, $2, $3);`,[req.body.username, req.body.password, req.body.mobile],fu
     //respond with data
 });
 
+
+
+app.post('/song_insert', function(req, res){
+    //make a request
+    //{"args":{"objects":[{"composer_name":"rahman","song_link":"https://www.dropbox.com/s/wmcd10icwz5qwjk/Enna%20Solla%20Pogirai%20//-%20MassTamilan.com.mp3?raw=1","song_name":"son2","user_id":27}],"table":"song"},"type":"insert"}
+    pool.query(`INSERT INTO "song" ("user_id", "composer_name", "song_name") VALUES ($1, $2, $3);`,[req.body.args.objects[0].user_id, req.body.args.objects[0].composer_name, req.body.args.objects[0].song_name],function(err,result){
+        if(err){
+            res.status(500).send({error: err.toString()});
+        }
+        else
+        {
+            res.send({message: "Success"});
+        }
+    });
+    //respond with data
+});
+
+
+
+
 app.post('/prof_pic', function(req, res){
     //{"args":{"columns":["*"],"table":"profile_image","where":{"user_id":27}},"type":"select"}
     pool.query(`SELECT "profile_image_link" FROM "user_table" WHERE "id" = $1;`
