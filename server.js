@@ -1,6 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
+var admin = require("firebase-admin");
 
 var app = express();
 app.use(morgan('combined'));
